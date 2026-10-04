@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Yt 4 free</title>
+  <title>YouTube</title>
   
-  <!-- Official YouTube High-Res SVG & ICO Favicon -->
+  <!-- Official YouTube High-Res Favicons -->
   <link rel="icon" type="image/svg+xml" href="https://www.youtube.com/s/desktop/f1721535/img/favicon.ico">
   <link rel="icon" type="image/x-icon" href="https://www.youtube.com/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="https://www.youtube.com/s/desktop/f1721535/img/favicon_32x32.png">
@@ -15,7 +15,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8F8F8;
+      --bg-hover: #F2F2F2;
+      --bg-card: #FFFFFF;
+      --text-primary: #0F0F0F;
+      --text-secondary: #606060;
+      --border-color: #CCCCCC;
+      --card-border: #E5E5E5;
+      --header-border: rgba(0, 0, 0, 0.1);
+      --input-bg: #FFFFFF;
+      --badge-bg: #0F0F0F;
+      --badge-text: #FFFFFF;
+      --accent-blue: #065fd4;
+      --toast-bg: #0F0F0F;
+      --toast-text: #FFFFFF;
+      --logo-text: #0F0F0F;
+    }
+
+    body.incognito-mode {
+      --bg-primary: #0F0F0F;
+      --bg-secondary: #1F1F1F;
+      --bg-hover: #272727;
+      --bg-card: #181818;
+      --text-primary: #F1F1F1;
+      --text-secondary: #AAAAAA;
+      --border-color: #303030;
+      --card-border: #2B2B2B;
+      --header-border: #272727;
+      --input-bg: #121212;
+      --badge-bg: #F1F1F1;
+      --badge-text: #0F0F0F;
+      --accent-blue: #3ea6ff;
+      --toast-bg: #212121;
+      --toast-text: #FFFFFF;
+      --logo-text: #F1F1F1;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,13 +64,14 @@
 
     body {
       font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background-color: #FFFFFF;
-      color: #0F0F0F;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
       user-select: none;
       -webkit-user-select: none;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     /* Top Bar */
@@ -43,8 +83,9 @@
       align-items: center;
       height: 56px;
       padding: 0 16px;
-      background-color: #FFFFFF;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background-color: var(--bg-primary);
+      border-bottom: 1px solid var(--header-border);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
     .header-content {
@@ -54,7 +95,7 @@
       gap: 16px;
     }
 
-    /* Brand Logo: Top-Left Most Corner with YouTube-Style Condensed Font */
+    /* Brand Logo */
     .brand-logo {
       display: inline-flex;
       align-items: center;
@@ -72,9 +113,8 @@
       font-size: 19px;
       font-weight: 700;
       letter-spacing: -0.8px;
-      color: #0F0F0F;
+      color: var(--logo-text);
       white-space: nowrap;
-      text-transform: none;
     }
 
     .brand-yt-icon {
@@ -88,7 +128,7 @@
       display: flex;
       align-items: center;
       flex: 1;
-      max-width: 580px;
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -98,18 +138,18 @@
       align-items: center;
       flex: 1;
       height: 40px;
-      padding: 0 4px 0 14px;
-      border: 1px solid #CCCCCC;
+      padding: 0 4px 0 16px;
+      border: 1px solid var(--border-color);
       border-right: none;
       border-radius: 20px 0 0 20px;
-      background: #FFFFFF;
+      background: var(--input-bg);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
       min-width: 0;
     }
 
     .search-input-wrap.focused {
-      border-color: #1c62b9;
+      border-color: var(--accent-blue);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
     }
 
@@ -120,7 +160,7 @@
       outline: none;
       font-size: 14px;
       font-family: inherit;
-      color: #0F0F0F;
+      color: var(--text-primary);
       background: transparent;
       user-select: text;
       -webkit-user-select: text;
@@ -128,13 +168,13 @@
     }
 
     .search-input::placeholder {
-      color: #717171;
+      color: var(--text-secondary);
     }
 
     .btn-action-icon {
       background: none;
       border: none;
-      color: #606060;
+      color: var(--text-secondary);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -146,62 +186,62 @@
     }
 
     .btn-action-icon:hover {
-      background-color: #E5E5E5;
-      color: #0F0F0F;
+      background-color: var(--bg-hover);
+      color: var(--text-primary);
     }
 
     .search-submit-btn {
-      width: 54px;
+      width: 64px;
       height: 40px;
-      border: 1px solid #CCCCCC;
+      border: 1px solid var(--border-color);
       border-radius: 0 20px 20px 0;
-      background-color: #F8F8F8;
+      background-color: var(--bg-secondary);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: #0F0F0F;
+      color: var(--text-primary);
       flex-shrink: 0;
-      transition: background-color 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .search-submit-btn:hover {
-      background-color: #F0F0F0;
+      background-color: var(--bg-hover);
     }
 
-    .search-submit-btn:active {
-      background-color: #E5E5E5;
-    }
-
-    /* Top-Right Share Button */
-    .top-share-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: none;
+    /* Incognito Mode Button */
+    .top-incognito-btn {
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 19px;
+      border: 1px solid transparent;
       background-color: transparent;
-      color: #0F0F0F;
+      color: var(--text-primary);
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
       cursor: pointer;
       flex-shrink: 0;
-      transition: background-color 0.15s ease, transform 0.1s ease;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
-    .top-share-btn:hover {
-      background-color: #F2F2F2;
+    .top-incognito-btn:hover {
+      background-color: var(--bg-hover);
     }
 
-    .top-share-btn:active {
-      background-color: #E5E5E5;
-      transform: scale(0.96);
+    .top-incognito-btn.active {
+      background-color: #272727;
+      color: #3ea6ff;
+      border-color: rgba(62, 166, 255, 0.4);
     }
 
     /* Main Content Wrapper */
     .main-wrapper {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1060px;
       margin: 0 auto;
       padding: 16px;
       display: flex;
@@ -210,16 +250,16 @@
       flex: 1;
     }
 
-    /* 16:9 Video Container with Rounded Corners */
+    /* 16:9 Video Container */
     .player-aspect-box {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background-color: #F9F9F9;
+      background-color: var(--bg-secondary);
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid #E5E5E5;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -244,38 +284,37 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 24px;
       text-align: center;
-      background-color: #FAFAFA;
+      background-color: var(--bg-secondary);
       border-radius: 16px;
       box-sizing: border-box;
     }
 
-    /* Faint YouTube Lozenge Logo */
     .yt-faint-icon {
-      width: clamp(52px, 11vw, 84px);
+      width: clamp(52px, 8vw, 76px);
       height: auto;
-      max-height: 52px;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.03));
+      max-height: 48px;
+      margin-bottom: 12px;
+      opacity: 0.85;
       flex-shrink: 0;
     }
 
     .empty-state-title {
-      font-size: clamp(15px, 3.8vw, 20px);
+      font-size: clamp(16px, 3.5vw, 22px);
       font-weight: 600;
-      color: #0F0F0F;
-      margin-bottom: 4px;
-      letter-spacing: -0.2px;
-      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
     }
 
     .empty-state-subtitle {
-      font-size: clamp(12px, 2.8vw, 14px);
-      color: #606060;
-      margin-bottom: 14px;
-      line-height: 1.3;
-      padding: 0 10px;
+      font-size: clamp(12px, 2.5vw, 14px);
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      line-height: 1.4;
+      max-width: 520px;
     }
 
     /* Step Card Containers Grid */
@@ -284,35 +323,36 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       width: 100%;
-      max-width: 680px;
+      max-width: 760px;
     }
 
     .step-box-card {
-      background: #FFFFFF;
-      border: 1px solid #E5E5E5;
+      background: var(--bg-card);
+      border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 12px 14px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      padding: 14px 16px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 6px;
+      gap: 8px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .step-box-card:hover {
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
     }
 
     .step-badge {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: #0F0F0F;
-      color: #FFFFFF;
-      font-size: 11px;
-      font-weight: 600;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 12px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -322,60 +362,61 @@
     .step-content {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
 
     .step-title {
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 600;
-      color: #0F0F0F;
+      color: var(--text-primary);
     }
 
     .step-desc {
-      font-size: 11px;
-      color: #606060;
-      line-height: 1.35;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.4;
     }
 
-    /* Seamless Footer */
+    /* Footer */
     .site-footer {
       background-color: transparent;
-      padding: 10px 14px 14px 14px;
+      padding: 12px 16px 16px 16px;
       margin-top: auto;
     }
 
     .footer-line {
-      max-width: 1020px;
+      max-width: 1060px;
       margin: 0 auto;
-      font-size: 10.5px;
-      color: #888888;
+      font-size: 11px;
+      color: var(--text-secondary);
       text-align: center;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .footer-author {
       font-weight: 600;
-      color: #555555;
+      color: var(--text-primary);
     }
 
-    /* Toast Notification */
+    /* Notification Toast */
     .toast-msg {
       position: fixed;
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(40px);
-      background-color: #0F0F0F;
-      color: #FFFFFF;
-      padding: 9px 16px;
+      background-color: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 10px 18px;
       border-radius: 8px;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
       opacity: 0;
       pointer-events: none;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
       z-index: 1000;
       white-space: nowrap;
+      border: 1px solid var(--border-color);
     }
 
     .toast-msg.show {
@@ -390,32 +431,35 @@
       }
 
       .header-content {
-        gap: 10px;
+        gap: 8px;
       }
 
       .brand-text {
-        font-size: 16px;
-        letter-spacing: -0.6px;
+        display: none;
       }
 
-      .brand-yt-icon {
-        width: 24px;
-        height: 17px;
+      .incognito-label {
+        display: none;
+      }
+
+      .top-incognito-btn {
+        padding: 0 8px;
+        width: 38px;
+        justify-content: center;
       }
 
       .main-wrapper {
-        padding: 12px 12px 14px 12px;
+        padding: 10px 10px 14px 10px;
         gap: 12px;
       }
 
       .player-aspect-box {
-        border-radius: 14px;
-        border: 1px solid #E5E5E5;
+        border-radius: 12px;
       }
 
       .video-iframe,
       .empty-state-view {
-        border-radius: 14px;
+        border-radius: 12px;
       }
 
       .empty-state-view .instructions-grid {
@@ -437,22 +481,12 @@
         text-align: left;
         align-items: center;
         gap: 12px;
-        padding: 10px 14px;
+        padding: 12px 14px;
         border-radius: 10px;
       }
 
       .search-submit-btn {
-        width: 42px;
-      }
-
-      .footer-line {
-        font-size: 10px;
-      }
-    }
-
-    @media (max-width: 440px) {
-      .brand-text {
-        display: none;
+        width: 46px;
       }
     }
 
@@ -468,13 +502,13 @@
   <!-- Header -->
   <header class="yt-header">
     <div class="header-content">
-      <!-- Top-Left Most Corner Brand Logo -->
-      <a href="#" class="brand-logo" id="homeLogo" title="No Ads YouTube">
-        <span class="brand-text">No Ads</span>
+      <!-- Top-Left Brand Logo -->
+      <a href="#" class="brand-logo" id="homeLogo" title="YouTube">
         <svg class="brand-yt-icon" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M66.52 7.74c-.78-2.93-3.09-5.24-6.02-6.02C55.22 0 34 0 34 0S12.78 0 7.5 1.72C4.57 2.5 2.26 4.81 1.48 7.74 0 13.02 0 24 0 24s0 10.98 1.48 16.26c.78 2.93 3.09 5.24 6.02 6.02C12.78 48 34 48 34 48s21.22 0 26.5-1.72c2.93-.78 5.24-3.09 6.02-6.02C68 34.98 68 24 68 24s0-10.98-1.48-16.26z" fill="#FF0000"/>
           <path d="M45 24L27 13.5v21L45 24z" fill="#FFFFFF"/>
         </svg>
+        <span class="brand-text">YouTube</span>
       </a>
 
       <!-- Centered Search Bar -->
@@ -484,37 +518,38 @@
             type="text" 
             id="urlInput" 
             class="search-input" 
-            placeholder="Put YT link" 
+            placeholder="Search or paste YouTube URL" 
             autocomplete="off" 
             spellcheck="false"
           >
           <!-- Paste Clipboard Button -->
-          <button type="button" class="btn-action-icon" id="pasteBtn" title="Paste link" aria-label="Paste">
+          <button type="button" class="btn-action-icon" id="pasteBtn" title="Paste URL" aria-label="Paste URL">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/>
             </svg>
           </button>
           <!-- Clear Input Button -->
-          <button type="button" class="btn-action-icon" id="clearBtn" title="Clear" aria-label="Clear" style="display: none;">
+          <button type="button" class="btn-action-icon" id="clearBtn" title="Clear input" aria-label="Clear" style="display: none;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
             </svg>
           </button>
         </div>
 
-        <!-- Official YouTube Search Submit Button -->
+        <!-- YouTube Search Submit Button -->
         <button type="button" class="search-submit-btn" id="searchBtn" title="Search" aria-label="Search">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" focusable="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false">
             <path clip-rule="evenodd" d="M16.296 16.996a8 8 0 11.707-.708l3.909 3.91-.708.707-3.908-3.909zM18 11a7 7 0 10-14 0 7 7 0 0014 0z" fill-rule="evenodd"/>
           </svg>
         </button>
       </div>
 
-      <!-- Top-Right Share Button -->
-      <button type="button" class="top-share-btn" id="shareBtn" title="Share" aria-label="Share">
+      <!-- Top-Right Incognito Mode Toggle -->
+      <button type="button" class="top-incognito-btn" id="incognitoBtn" title="Turn on Incognito" aria-label="Toggle Incognito Mode">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
         </svg>
+        <span class="incognito-label">Incognito</span>
       </button>
     </div>
   </header>
@@ -522,7 +557,7 @@
   <!-- Video Main Section -->
   <main class="main-wrapper">
     <div class="player-aspect-box" id="playerContainer">
-      <!-- YouTube Embed IFrame -->
+      <!-- YouTube Embed IFrame with postMessage & IFrame API support -->
       <iframe 
         id="ytIframe" 
         class="video-iframe" 
@@ -532,75 +567,75 @@
         allowfullscreen>
       </iframe>
 
-      <!-- Empty State View Inside Player -->
+      <!-- Empty State View -->
       <div class="empty-state-view" id="emptyState">
         <svg class="yt-faint-icon" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M66.52 7.74c-.78-2.93-3.09-5.24-6.02-6.02C55.22 0 34 0 34 0S12.78 0 7.5 1.72C4.57 2.5 2.26 4.81 1.48 7.74 0 13.02 0 24 0 24s0 10.98 1.48 16.26c.78 2.93 3.09 5.24 6.02 6.02C12.78 48 34 48 34 48s21.22 0 26.5-1.72c2.93-.78 5.24-3.09 6.02-6.02C68 34.98 68 24 68 24s0-10.98-1.48-16.26z" fill="#CCCCCC"/>
+          <path d="M66.52 7.74c-.78-2.93-3.09-5.24-6.02-6.02C55.22 0 34 0 34 0S12.78 0 7.5 1.72C4.57 2.5 2.26 4.81 1.48 7.74 0 13.02 0 24 0 24s0 10.98 1.48 16.26c.78 2.93 3.09 5.24 6.02 6.02C12.78 48 34 48 34 48s21.22 0 26.5-1.72c2.93-.78 5.24-3.09 6.02-6.02C68 34.98 68 24 68 24s0-10.98-1.48-16.26z" fill="#FF0000"/>
           <path d="M45 24L27 13.5v21L45 24z" fill="#FFFFFF"/>
         </svg>
 
-        <h2 class="empty-state-title">No video selected</h2>
-        <p class="empty-state-subtitle">Paste any YouTube URL or 11-character ID above</p>
+        <h2 class="empty-state-title">Ready to watch</h2>
+        <p class="empty-state-subtitle">Paste any YouTube video or Shorts link in the search bar above to launch instant playback</p>
 
-        <!-- Desktop Individual Step Containers -->
+        <!-- Desktop Steps Grid -->
         <div class="instructions-grid">
           <div class="step-box-card">
             <span class="step-badge">1</span>
             <div class="step-content">
-              <span class="step-title">Copy Link</span>
-              <span class="step-desc">Grab any video, Short, or regular link from YouTube.</span>
+              <span class="step-title">Copy Video Link</span>
+              <span class="step-desc">Grab a share link, Shorts URL, or ID directly from YouTube.</span>
             </div>
           </div>
           <div class="step-box-card">
             <span class="step-badge">2</span>
             <div class="step-content">
-              <span class="step-title">Paste Above</span>
-              <span class="step-desc">Tap the paste icon or enter the link in the top bar.</span>
+              <span class="step-title">Paste & Play</span>
+              <span class="step-desc">Click the clipboard icon to paste immediately and begin streaming.</span>
             </div>
           </div>
           <div class="step-box-card">
             <span class="step-badge">3</span>
             <div class="step-content">
-              <span class="step-title">Distraction-Free</span>
-              <span class="step-desc">Watch without sidebar feeds, comments, or interruptions.</span>
+              <span class="step-title">Auto-Save Progress</span>
+              <span class="step-desc">Resume where you paused automatically, or go Incognito for full privacy.</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Mobile-Only Individual Step Containers Below Video Player -->
+    <!-- Mobile-Only Steps Below Video Player -->
     <div class="mobile-instructions-section" id="mobileInstructions">
       <div class="instructions-grid">
         <div class="step-box-card">
           <span class="step-badge">1</span>
           <div class="step-content">
-            <span class="step-title">Copy Link</span>
-            <span class="step-desc">Grab any video, Short, or regular link from YouTube.</span>
+            <span class="step-title">Copy Video Link</span>
+            <span class="step-desc">Grab a share link, Shorts URL, or ID directly from YouTube.</span>
           </div>
         </div>
         <div class="step-box-card">
           <span class="step-badge">2</span>
           <div class="step-content">
-            <span class="step-title">Paste Above</span>
-            <span class="step-desc">Tap the paste icon in the top search bar.</span>
+            <span class="step-title">Paste & Play</span>
+            <span class="step-desc">Click the clipboard icon to paste immediately and begin streaming.</span>
           </div>
         </div>
         <div class="step-box-card">
           <span class="step-badge">3</span>
           <div class="step-content">
-            <span class="step-title">Distraction-Free</span>
-            <span class="step-desc">Watch smoothly without algorithmic feeds or distractions.</span>
+            <span class="step-title">Auto-Save Progress</span>
+            <span class="step-desc">Resume where you paused automatically, or go Incognito for full privacy.</span>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Compact Seamless Footer -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-line">
-      Uses privacy-enhanced embeds without non-essential tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
+      Enhanced privacy player &middot; Free of third-party tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
     </div>
   </footer>
 
@@ -614,7 +649,7 @@
       const pasteBtn = document.getElementById('pasteBtn');
       const clearBtn = document.getElementById('clearBtn');
       const searchBtn = document.getElementById('searchBtn');
-      const shareBtn = document.getElementById('shareBtn');
+      const incognitoBtn = document.getElementById('incognitoBtn');
       const ytIframe = document.getElementById('ytIframe');
       const emptyState = document.getElementById('emptyState');
       const mobileInstructions = document.getElementById('mobileInstructions');
@@ -622,6 +657,9 @@
       const toast = document.getElementById('toast');
 
       let currentVideoId = '';
+      let isIncognito = false;
+      let currentVideoTitle = '';
+      let progressInterval = null;
 
       function extractVideoId(input) {
         if (!input) return null;
@@ -642,26 +680,118 @@
         setTimeout(() => toast.classList.remove('show'), 2500);
       }
 
+      function updateDocumentTitle() {
+        if (isIncognito) {
+          document.title = 'Incognito • YouTube';
+        } else if (currentVideoTitle) {
+          document.title = `${currentVideoTitle} - YouTube`;
+        } else {
+          document.title = 'YouTube';
+        }
+      }
+
+      async function fetchVideoTitle(id) {
+        if (isIncognito) return;
+        try {
+          const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+          const data = await response.json();
+          if (data && data.title) {
+            currentVideoTitle = data.title;
+            updateDocumentTitle();
+          }
+        } catch (e) {
+          // Fallback title on network fail
+          currentVideoTitle = 'YouTube Video';
+          updateDocumentTitle();
+        }
+      }
+
+      function getSavedProgress(id) {
+        if (isIncognito || !id) return 0;
+        try {
+          const saved = localStorage.getItem(`yt_progress_${id}`);
+          return saved ? Math.floor(parseFloat(saved)) : 0;
+        } catch (e) {
+          return 0;
+        }
+      }
+
+      function saveProgress(id, seconds) {
+        if (isIncognito || !id || seconds <= 0) return;
+        try {
+          localStorage.setItem(`yt_progress_${id}`, seconds.toString());
+        } catch (e) {}
+      }
+
+      function sendIframeCommand(func, args) {
+        if (ytIframe && ytIframe.contentWindow) {
+          ytIframe.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: func,
+            args: args || []
+          }), '*');
+        }
+      }
+
+      function setupProgressTracking() {
+        if (progressInterval) clearInterval(progressInterval);
+        
+        // Poll every 3 seconds for current time via postMessage
+        progressInterval = setInterval(() => {
+          if (!isIncognito && currentVideoId && ytIframe.style.display === 'block') {
+            sendIframeCommand('getCurrentTime');
+          }
+        }, 3000);
+      }
+
+      window.addEventListener('message', (event) => {
+        try {
+          const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+          if (data && data.event === 'infoDelivery' && data.info && typeof data.info.currentTime === 'number') {
+            const time = data.info.currentTime;
+            if (time > 2 && currentVideoId && !isIncognito) {
+              saveProgress(currentVideoId, Math.floor(time));
+            }
+          }
+        } catch (e) {}
+      });
+
       function loadVideo(id, updateHistory = true) {
         if (!id) return;
         currentVideoId = id;
         
-        ytIframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+        const startTime = getSavedProgress(id);
+        const startParam = startTime > 5 ? `&start=${startTime}` : '';
+
+        ytIframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1${startParam}`;
         ytIframe.style.display = 'block';
         emptyState.style.display = 'none';
         if (mobileInstructions) {
           mobileInstructions.style.display = 'none';
         }
 
-        if (updateHistory) {
+        if (updateHistory && !isIncognito) {
           const newUrl = new URL(window.location.href);
           newUrl.searchParams.set('v', id);
           window.history.replaceState({}, '', newUrl);
         }
+
+        if (!isIncognito) {
+          fetchVideoTitle(id);
+          if (startTime > 5) {
+            showToast(`Resumed from ${Math.floor(startTime / 60)}:${('0' + Math.floor(startTime % 60)).slice(-2)}`);
+          }
+        } else {
+          updateDocumentTitle();
+        }
+
+        setupProgressTracking();
       }
 
       function resetPlayer() {
         currentVideoId = '';
+        currentVideoTitle = '';
+        if (progressInterval) clearInterval(progressInterval);
         ytIframe.src = '';
         ytIframe.style.display = 'none';
         emptyState.style.display = 'flex';
@@ -673,6 +803,40 @@
         newUrl.searchParams.delete('v');
         newUrl.searchParams.delete('url');
         window.history.replaceState({}, '', newUrl.pathname);
+
+        updateDocumentTitle();
+      }
+
+      function setIncognitoMode(enable) {
+        isIncognito = enable;
+        if (isIncognito) {
+          document.body.classList.add('incognito-mode');
+          incognitoBtn.classList.add('active');
+          incognitoBtn.title = 'Turn off Incognito';
+
+          // Remove video parameters from the URL completely in Incognito
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete('v');
+          cleanUrl.searchParams.delete('url');
+          window.history.replaceState({}, '', cleanUrl.pathname);
+
+          updateDocumentTitle();
+          showToast('Incognito mode active: progress & link history disabled');
+        } else {
+          document.body.classList.remove('incognito-mode');
+          incognitoBtn.classList.remove('active');
+          incognitoBtn.title = 'Turn on Incognito';
+
+          if (currentVideoId) {
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('v', currentVideoId);
+            window.history.replaceState({}, '', newUrl);
+            fetchVideoTitle(currentVideoId);
+          } else {
+            updateDocumentTitle();
+          }
+          showToast('Incognito mode turned off');
+        }
       }
 
       function handleProcessInput() {
@@ -741,30 +905,11 @@
         }
       });
 
-      shareBtn.addEventListener('click', async () => {
-        const shareUrl = currentVideoId 
-          ? `${window.location.origin}${window.location.pathname}?v=${currentVideoId}`
-          : window.location.href;
-
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title: 'YouTube Player',
-              text: 'Watch distraction-free',
-              url: shareUrl
-            });
-            return;
-          } catch (e) {}
-        }
-
-        try {
-          await navigator.clipboard.writeText(shareUrl);
-          showToast('Link copied to clipboard');
-        } catch (e) {
-          showToast('Failed to copy link');
-        }
+      incognitoBtn.addEventListener('click', () => {
+        setIncognitoMode(!isIncognito);
       });
 
+      // Initial query parameter check
       const params = new URLSearchParams(window.location.search);
       const queryId = params.get('v') || extractVideoId(params.get('url'));
       if (queryId) {
