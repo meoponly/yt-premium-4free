@@ -35,7 +35,7 @@
       --player-max-w: 1060px;
     }
 
-    /* Incognito Mode (Dark Theme) */
+    /* Incognito Mode (Dark / Stealth Theme) */
     body.incognito-mode {
       --yt-spec-base-background: #0D0E12;
       --yt-spec-text-primary: #F5F5F5;
@@ -94,6 +94,7 @@
       pointer-events: none;
       user-select: none;
       filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+      transition: filter 0.2s ease;
     }
 
     .deadpool-sleeping-hero img {
@@ -101,6 +102,10 @@
       height: auto;
       display: block;
       background: transparent;
+    }
+
+    body.incognito-mode .deadpool-sleeping-hero {
+      filter: drop-shadow(0 6px 14px rgba(226, 35, 42, 0.45));
     }
 
     /* Top Bar */
@@ -217,38 +222,44 @@
 
     /* Incognito Toggle Button */
     .top-incognito-btn {
+      position: relative;
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1px solid transparent;
-      background-color: transparent;
+      border: 1px solid var(--yt-spec-border-subtle);
+      background-color: var(--yt-spec-button-bg);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      padding: 4px;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      padding: 6px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .top-incognito-btn:hover {
+      border-color: var(--deadpool-red);
+      transform: scale(1.05);
     }
 
     .incognito-avatar {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
-      filter: grayscale(85%) opacity(0.7);
-      transition: filter 0.2s ease;
-    }
-
-    .top-incognito-btn:hover .incognito-avatar,
-    body.incognito-mode .incognito-avatar {
-      filter: grayscale(0%) opacity(1);
+      opacity: 0.65;
+      transition: opacity 0.2s ease, filter 0.2s ease;
     }
 
     body.incognito-mode .top-incognito-btn {
+      background-color: #191B24;
       border-color: var(--deadpool-red);
       box-shadow: 0 0 12px var(--deadpool-glow);
+    }
+
+    body.incognito-mode .incognito-avatar {
+      opacity: 1;
+      filter: drop-shadow(0 0 4px rgba(226, 35, 42, 0.4));
     }
 
     /* Main Container */
@@ -286,6 +297,7 @@
     body.incognito-mode .player-aspect-box {
       background-color: #08090D;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+      border-color: #262938;
     }
 
     .video-iframe {
@@ -313,7 +325,7 @@
     }
 
     body.incognito-mode .empty-state-view {
-      background: radial-gradient(circle at center, rgba(226, 35, 42, 0.08) 0%, #0D0F14 70%);
+      background: radial-gradient(circle at center, rgba(226, 35, 42, 0.09) 0%, #0D0F14 75%);
     }
 
     .empty-state-title {
@@ -470,9 +482,9 @@
         </button>
       </div>
 
-      <!-- Incognito Toggle Button -->
+      <!-- Chrome Incognito Toggle Button with incognito.svg -->
       <button type="button" class="top-incognito-btn" id="incognitoBtn" title="Toggle Incognito Mode" aria-label="Toggle Incognito Mode">
-        <img src="favicon.png" alt="Incognito Mode" class="incognito-avatar" />
+        <img src="incognito.svg" alt="Incognito Mode" class="incognito-avatar" />
       </button>
     </div>
   </header>
@@ -491,8 +503,8 @@
         </iframe>
 
         <div class="empty-state-view" id="emptyState">
-          <h2 class="empty-state-title">Maximum Playback</h2>
-          <p class="empty-state-subtitle">Paste any YouTube URL or 11-character video ID above for clean, cookie-free streaming</p>
+          <h2 class="empty-state-title" id="emptyTitle">Maximum Playback</h2>
+          <p class="empty-state-subtitle" id="emptySubtitle">Paste any YouTube URL or 11-character video ID above for clean, cookie-free streaming</p>
 
           <!-- Desktop Steps -->
           <div class="instructions-grid">
@@ -550,7 +562,7 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer without DeadTube text -->
   <footer class="site-footer">
     <div class="footer-line">
       Privacy-enhanced embeds without non-essential tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
@@ -567,6 +579,8 @@
       const incognitoBtn = document.getElementById('incognitoBtn');
       const ytIframe = document.getElementById('ytIframe');
       const emptyState = document.getElementById('emptyState');
+      const emptyTitle = document.getElementById('emptyTitle');
+      const emptySubtitle = document.getElementById('emptySubtitle');
       const mobileInstructions = document.getElementById('mobileInstructions');
 
       let currentVideoId = '';
@@ -589,7 +603,7 @@
 
       function updateDocumentTitle() {
         if (isIncognito) {
-          document.title = 'DeadTube';
+          document.title = 'Incognito - DeadTube';
         } else if (currentVideoTitle) {
           document.title = `${currentVideoTitle} - DeadTube`;
         } else {
@@ -713,6 +727,8 @@
         isIncognito = enable;
         if (isIncognito) {
           document.body.classList.add('incognito-mode');
+          emptyTitle.textContent = "Incognito Mode";
+          emptySubtitle.textContent = "Stealth browsing active: Playback history, search inputs, and cookies will not be saved.";
           
           const cleanUrl = new URL(window.location.href);
           cleanUrl.searchParams.delete('v');
@@ -722,6 +738,8 @@
           updateDocumentTitle();
         } else {
           document.body.classList.remove('incognito-mode');
+          emptyTitle.textContent = "Maximum Playback";
+          emptySubtitle.textContent = "Paste any YouTube URL or 11-character video ID above for clean, cookie-free streaming";
           
           if (currentVideoId) {
             const newUrl = new URL(window.location.href);
