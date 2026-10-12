@@ -1,9 +1,10 @@
-const CACHE_NAME = 'yt-offline-v1';
+const CACHE_NAME = 'yt-offline-v2';
+
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './deadpool.png',
-  './deadpool.jpg'
+  './sleeping.png',
+  './favicon.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -31,12 +32,38 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Only intercept same-origin requests (HTML, logo assets), allow direct streaming for YouTube embeds
-  if (event.request.url.startsWith(self.location.origin)) {
+  // Only handle same-origin requests; bypass external YouTube/API streams
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
+  // 1. Navigation / HTML pages: Network first, fallback to cached HTML
+  if (event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        return cachedResponse || fetch(event.request).catch(() => caches.match('./index.html'));
-      })
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match('./index.html'))
     );
+    return;
   }
+
+  // 2. Static Assets (images, icons): Cache first, fallback to network and update cache
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const copy = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
+        return networkResponse;
+      });
+    })
+  );
 });
