@@ -220,46 +220,54 @@
       box-shadow: 0 0 12px var(--deadpool-glow);
     }
 
-    /* Incognito Toggle Button */
+    /* Incognito Toggle Button - Clean, Borderless */
     .top-incognito-btn {
       position: relative;
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1px solid var(--yt-spec-border-subtle);
-      background-color: var(--yt-spec-button-bg);
+      border: 1px solid transparent;
+      background-color: transparent;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      padding: 6px;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      padding: 4px;
+      transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
     .top-incognito-btn:hover {
-      border-color: var(--deadpool-red);
+      background-color: var(--yt-spec-button-hover);
       transform: scale(1.05);
     }
 
+    /* Crisp, high-contrast dark in normal mode */
     .incognito-avatar {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
-      opacity: 0.65;
-      transition: opacity 0.2s ease, filter 0.2s ease;
+      opacity: 1;
+      filter: brightness(0.25) contrast(1.4);
+      transition: filter 0.2s ease, opacity 0.2s ease;
     }
 
+    /* Incognito Active State (Dark mode) - No red borders */
     body.incognito-mode .top-incognito-btn {
-      background-color: #191B24;
-      border-color: var(--deadpool-red);
-      box-shadow: 0 0 12px var(--deadpool-glow);
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: none;
     }
 
+    body.incognito-mode .top-incognito-btn:hover {
+      background-color: var(--yt-spec-button-hover);
+    }
+
+    /* Restores original bright/white icon styling in incognito mode */
     body.incognito-mode .incognito-avatar {
       opacity: 1;
-      filter: drop-shadow(0 0 4px rgba(226, 35, 42, 0.4));
+      filter: none;
     }
 
     /* Main Container */
@@ -562,7 +570,7 @@
     </div>
   </main>
 
-  <!-- Footer without DeadTube text -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-line">
       Privacy-enhanced embeds without non-essential tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
