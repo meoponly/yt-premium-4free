@@ -3,43 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>YouTube</title>
+  <title>DeadTube</title>
   
-  <link rel="icon" type="image/x-icon" href="https://www.youtube.com/favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --yt-spec-base-background: #FFFFFF;
+      /* Clean Light Theme (Default / Normal Mode) */
+      --yt-spec-base-background: #F9F9FB;
       --yt-spec-text-primary: #0F0F0F;
       --yt-spec-text-secondary: #606060;
       --yt-spec-border-subtle: #E5E5E5;
       --yt-spec-input-border: #CCCCCC;
-      --yt-spec-input-focus: #1C62B9;
-      --yt-spec-button-bg: #F8F8F8;
-      --yt-spec-button-hover: #F2F2F2;
+      --yt-spec-input-focus: #E2232A;
+      --yt-spec-button-bg: #F2F2F2;
+      --yt-spec-button-hover: #EAEAEA;
       --yt-spec-card-bg: #FFFFFF;
-      --yt-spec-header-border: rgba(0, 0, 0, 0.1);
+      --yt-spec-header-border: #E8E8E8;
       --yt-spec-badge-bg: #0F0F0F;
       --yt-spec-badge-text: #FFFFFF;
-      --yt-logo-filter: none;
+      --deadpool-red: #E2232A;
+      --deadpool-glow: rgba(226, 35, 42, 0.25);
+      --header-bg: rgba(255, 255, 255, 0.95);
+      --body-bg-gradient: radial-gradient(circle at 50% 12%, rgba(226, 35, 42, 0.05) 0%, transparent 60%);
+      --grid-line-color: rgba(0, 0, 0, 0.035);
+
+      --player-max-w: 1060px;
     }
 
+    /* Incognito Mode (Dark Theme) */
     body.incognito-mode {
-      --yt-spec-base-background: #0F0F0F;
-      --yt-spec-text-primary: #F1F1F1;
-      --yt-spec-text-secondary: #AAAAAA;
-      --yt-spec-border-subtle: #272727;
-      --yt-spec-input-border: #303030;
-      --yt-spec-input-focus: #3EA6FF;
-      --yt-spec-button-bg: #222222;
-      --yt-spec-button-hover: #272727;
-      --yt-spec-card-bg: #181818;
-      --yt-spec-header-border: #272727;
-      --yt-spec-badge-bg: #F1F1F1;
-      --yt-spec-badge-text: #0F0F0F;
+      --yt-spec-base-background: #0D0E12;
+      --yt-spec-text-primary: #F5F5F5;
+      --yt-spec-text-secondary: #A0A0A8;
+      --yt-spec-border-subtle: #242630;
+      --yt-spec-input-border: #323542;
+      --yt-spec-input-focus: #E2232A;
+      --yt-spec-button-bg: #1A1B22;
+      --yt-spec-button-hover: #262833;
+      --yt-spec-card-bg: rgba(18, 19, 26, 0.9);
+      --yt-spec-header-border: #222430;
+      --yt-spec-badge-bg: #E2232A;
+      --yt-spec-badge-text: #FFFFFF;
+      --deadpool-red: #E2232A;
+      --deadpool-glow: rgba(226, 35, 42, 0.35);
+      --header-bg: rgba(13, 14, 18, 0.95);
+      --body-bg-gradient: radial-gradient(circle at 50% 12%, rgba(226, 35, 42, 0.16) 0%, transparent 55%);
+      --grid-line-color: rgba(255, 255, 255, 0.02);
     }
 
     * {
@@ -54,61 +68,61 @@
       font-size: 14px;
       line-height: 1.4;
       background-color: var(--yt-spec-base-background);
+      background-image: 
+        var(--body-bg-gradient),
+        linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
       color: var(--yt-spec-text-primary);
       user-select: none;
       -webkit-user-select: none;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      transition: background-color 0.15s ease, color 0.15s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+    }
+
+    /* Fixed Deadpool Placement */
+    .deadpool-sleeping-hero {
+      position: fixed;
+      top: 2px;
+      left: 14px;
+      width: 154px;
+      z-index: 100;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+    }
+
+    .deadpool-sleeping-hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: transparent;
     }
 
     /* Top Bar */
     .yt-header {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 90;
       display: flex;
       align-items: center;
-      height: 56px;
-      padding: 0 16px;
-      background-color: var(--yt-spec-base-background);
+      height: 60px;
+      padding: 0 clamp(10px, 2.5vw, 24px);
+      background-color: var(--header-bg);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--yt-spec-header-border);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
     .header-content {
       display: flex;
       align-items: center;
       width: 100%;
-      gap: 16px;
-    }
-
-    /* Deadpool Logo Fix */
-    .brand-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      flex-shrink: 0;
-      cursor: pointer;
-      height: 44px;
-      width: 130px;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-
-    .brand-deadpool-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 25%;
-      border-radius: 8px;
-      display: block;
-      transition: transform 0.15s ease;
-    }
-
-    .brand-logo:hover .brand-deadpool-img {
-      transform: scale(1.03);
+      gap: clamp(10px, 2vw, 20px);
     }
 
     /* Search Container */
@@ -116,7 +130,7 @@
       display: flex;
       align-items: center;
       flex: 1;
-      max-width: 600px;
+      max-width: 640px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -130,15 +144,15 @@
       border: 1px solid var(--yt-spec-input-border);
       border-right: none;
       border-radius: 20px 0 0 20px;
-      background: var(--yt-spec-base-background);
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+      background: var(--yt-spec-card-bg);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
       min-width: 0;
     }
 
     .search-input-wrap.focused {
       border-color: var(--yt-spec-input-focus);
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
+      box-shadow: 0 0 10px var(--deadpool-glow);
     }
 
     .search-input {
@@ -177,11 +191,11 @@
 
     .btn-action-icon:hover {
       background-color: var(--yt-spec-button-hover);
-      color: var(--yt-spec-text-primary);
+      color: var(--deadpool-red);
     }
 
     .search-submit-btn {
-      width: 64px;
+      width: 60px;
       height: 40px;
       border: 1px solid var(--yt-spec-input-border);
       border-radius: 0 20px 20px 0;
@@ -192,57 +206,86 @@
       cursor: pointer;
       color: var(--yt-spec-text-primary);
       flex-shrink: 0;
-      transition: background-color 0.15s ease;
+      transition: all 0.15s ease;
     }
 
     .search-submit-btn:hover {
-      background-color: var(--yt-spec-button-hover);
+      background-color: var(--deadpool-red);
+      color: #FFFFFF;
+      box-shadow: 0 0 12px var(--deadpool-glow);
     }
 
-    /* Official Chrome Incognito Icon Button */
+    /* Incognito Toggle Button */
     .top-incognito-btn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: none;
+      border: 1px solid transparent;
       background-color: transparent;
-      color: var(--yt-spec-text-secondary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      transition: background-color 0.15s ease, color 0.15s ease;
+      padding: 4px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .top-incognito-btn:hover {
-      background-color: var(--yt-spec-button-hover);
-      color: var(--yt-spec-text-primary);
+    .incognito-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(85%) opacity(0.7);
+      transition: filter 0.2s ease;
+    }
+
+    .top-incognito-btn:hover .incognito-avatar,
+    body.incognito-mode .incognito-avatar {
+      filter: grayscale(0%) opacity(1);
+    }
+
+    body.incognito-mode .top-incognito-btn {
+      border-color: var(--deadpool-red);
+      box-shadow: 0 0 12px var(--deadpool-glow);
     }
 
     /* Main Container */
     .main-wrapper {
       width: 100%;
-      max-width: 1060px;
+      max-width: var(--player-max-w);
       margin: 0 auto;
-      padding: 16px;
+      padding: clamp(16px, 2.5vw, 24px) clamp(10px, 2vw, 16px) 24px;
       display: flex;
       flex-direction: column;
       gap: 16px;
       flex: 1;
     }
 
+    .player-stage-wrap {
+      position: relative;
+      width: 100%;
+    }
+
     .player-aspect-box {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background-color: var(--yt-spec-button-bg);
-      border-radius: 12px;
+      background-color: var(--yt-spec-card-bg);
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid var(--yt-spec-border-subtle);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 5;
+    }
+
+    body.incognito-mode .player-aspect-box {
+      background-color: #08090D;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
     }
 
     .video-iframe {
@@ -253,6 +296,7 @@
       border: none;
       border-radius: 12px;
       display: none;
+      z-index: 2;
     }
 
     .empty-state-view {
@@ -262,24 +306,29 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: clamp(16px, 4vw, 32px);
       text-align: center;
-      background-color: var(--yt-spec-button-bg);
+      background: var(--yt-spec-card-bg);
+      z-index: 1;
+    }
+
+    body.incognito-mode .empty-state-view {
+      background: radial-gradient(circle at center, rgba(226, 35, 42, 0.08) 0%, #0D0F14 70%);
     }
 
     .empty-state-title {
-      font-size: 18px;
-      font-weight: 500;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 1.5px;
       color: var(--yt-spec-text-primary);
-      margin-bottom: 6px;
-      letter-spacing: -0.1px;
+      margin-bottom: 4px;
     }
 
     .empty-state-subtitle {
-      font-size: 13px;
+      font-size: clamp(12px, 1.8vw, 13.5px);
       color: var(--yt-spec-text-secondary);
-      margin-bottom: 24px;
-      max-width: 480px;
+      margin-bottom: clamp(16px, 3vh, 26px);
+      max-width: 500px;
     }
 
     .instructions-grid {
@@ -287,11 +336,11 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       width: 100%;
-      max-width: 760px;
+      max-width: 780px;
     }
 
     .step-box-card {
-      background: var(--yt-spec-card-bg);
+      background: var(--yt-spec-button-bg);
       border: 1px solid var(--yt-spec-border-subtle);
       border-radius: 10px;
       padding: 14px 16px;
@@ -303,8 +352,8 @@
     }
 
     .step-badge {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: var(--yt-spec-badge-bg);
       color: var(--yt-spec-badge-text);
@@ -318,7 +367,7 @@
 
     .step-title {
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--yt-spec-text-primary);
     }
 
@@ -328,10 +377,9 @@
       line-height: 1.35;
     }
 
-    /* Restored Original Minimal Footer */
     .site-footer {
       background-color: transparent;
-      padding: 14px 16px 16px 16px;
+      padding: 16px;
       margin-top: auto;
     }
 
@@ -346,20 +394,10 @@
 
     .footer-author {
       font-weight: 600;
-      color: var(--yt-spec-text-primary);
+      color: var(--deadpool-red);
     }
 
     @media (max-width: 640px) {
-      .yt-header {
-        padding: 0 10px;
-      }
-      .brand-logo {
-        width: 100px;
-        height: 38px;
-      }
-      .main-wrapper {
-        padding: 8px 8px 16px 8px;
-      }
       .empty-state-view .instructions-grid {
         display: none;
       }
@@ -391,14 +429,14 @@
 </head>
 <body oncontextmenu="return false;">
 
+  <!-- Deadpool fixed in the top-left -->
+  <div class="deadpool-sleeping-hero">
+    <img src="sleeping.png" alt="Deadpool" />
+  </div>
+
   <!-- Header -->
   <header class="yt-header">
     <div class="header-content">
-      <!-- Deadpool Logo -->
-      <a href="#" class="brand-logo" id="homeLogo" title="Home">
-        <img src="deadpool.jpg" onerror="this.onerror=null; this.src='deadpool.png';" alt="Deadpool Logo" class="brand-deadpool-img">
-      </a>
-
       <!-- Search Bar -->
       <div class="search-container">
         <div class="search-input-wrap" id="searchWrap">
@@ -432,52 +470,52 @@
         </button>
       </div>
 
-      <!-- Real Chromium Incognito Vector Icon -->
-      <button type="button" class="top-incognito-btn" id="incognitoBtn" title="Incognito mode" aria-label="Toggle Incognito Mode">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C8.75 2 6.04 3.73 4.5 5.5h15C17.96 3.73 15.25 2 12 2zm-8.8 6.5C3.07 8.95 3 9.47 3 10c0 1.25.43 2.4 1.15 3.32L9 11.16V9H3.2zm17.6 0H15v2.16l4.85 2.16c.72-.92 1.15-2.07 1.15-3.32 0-.53-.07-1.05-.2-1.5zM6.5 14C5.12 14 4 15.12 4 16.5S5.12 19 6.5 19 9 17.88 9 16.5 7.88 14 6.5 14zm11 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-5.5 1.25c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75z"/>
-        </svg>
+      <!-- Incognito Toggle Button -->
+      <button type="button" class="top-incognito-btn" id="incognitoBtn" title="Toggle Incognito Mode" aria-label="Toggle Incognito Mode">
+        <img src="favicon.png" alt="Incognito Mode" class="incognito-avatar" />
       </button>
     </div>
   </header>
 
   <!-- Player Main Wrapper -->
   <main class="main-wrapper">
-    <div class="player-aspect-box" id="playerContainer">
-      <iframe 
-        id="ytIframe" 
-        class="video-iframe" 
-        src="" 
-        title="YouTube video player" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-      </iframe>
+    <div class="player-stage-wrap">
+      <div class="player-aspect-box" id="playerContainer">
+        <iframe 
+          id="ytIframe" 
+          class="video-iframe" 
+          src="" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
 
-      <div class="empty-state-view" id="emptyState">
-        <h2 class="empty-state-title">Ready to stream</h2>
-        <p class="empty-state-subtitle">Paste any YouTube URL or 11-character video ID above to start playback instantly</p>
+        <div class="empty-state-view" id="emptyState">
+          <h2 class="empty-state-title">Maximum Playback</h2>
+          <p class="empty-state-subtitle">Paste any YouTube URL or 11-character video ID above for clean, cookie-free streaming</p>
 
-        <!-- Desktop Steps -->
-        <div class="instructions-grid">
-          <div class="step-box-card">
-            <span class="step-badge">1</span>
-            <div>
-              <span class="step-title">Copy Link</span>
-              <p class="step-desc">Grab any video, Short, or embed URL from YouTube.</p>
+          <!-- Desktop Steps -->
+          <div class="instructions-grid">
+            <div class="step-box-card">
+              <span class="step-badge">1</span>
+              <div>
+                <span class="step-title">Copy Link</span>
+                <p class="step-desc">Grab any video, Short, or embed URL from YouTube.</p>
+              </div>
             </div>
-          </div>
-          <div class="step-box-card">
-            <span class="step-badge">2</span>
-            <div>
-              <span class="step-title">Paste & Play</span>
-              <p class="step-desc">Tap the paste clipboard button above to launch playback.</p>
+            <div class="step-box-card">
+              <span class="step-badge">2</span>
+              <div>
+                <span class="step-title">Paste & Play</span>
+                <p class="step-desc">Tap the paste clipboard button above to launch playback.</p>
+              </div>
             </div>
-          </div>
-          <div class="step-box-card">
-            <span class="step-badge">3</span>
-            <div>
-              <span class="step-title">Saved Progress</span>
-              <p class="step-desc">Automatically remembers timestamp, or use Incognito for clean sessions.</p>
+            <div class="step-box-card">
+              <span class="step-badge">3</span>
+              <div>
+                <span class="step-title">Saved Progress</span>
+                <p class="step-desc">Automatically remembers timestamp, or use Incognito for clean sessions.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -512,10 +550,10 @@
     </div>
   </main>
 
-  <!-- Restored Original Footer -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-line">
-      Uses privacy-enhanced embeds without non-essential tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
+      Privacy-enhanced embeds without non-essential tracking cookies &middot; Developed by <span class="footer-author">meoponly</span>
     </div>
   </footer>
 
@@ -530,7 +568,6 @@
       const ytIframe = document.getElementById('ytIframe');
       const emptyState = document.getElementById('emptyState');
       const mobileInstructions = document.getElementById('mobileInstructions');
-      const homeLogo = document.getElementById('homeLogo');
 
       let currentVideoId = '';
       let isIncognito = false;
@@ -552,11 +589,11 @@
 
       function updateDocumentTitle() {
         if (isIncognito) {
-          document.title = 'YouTube';
+          document.title = 'DeadTube';
         } else if (currentVideoTitle) {
-          document.title = `${currentVideoTitle} - YouTube`;
+          document.title = `${currentVideoTitle} - DeadTube`;
         } else {
-          document.title = 'YouTube';
+          document.title = 'DeadTube';
         }
       }
 
@@ -733,14 +770,6 @@
         clearBtn.style.display = 'none';
         pasteBtn.style.display = 'inline-flex';
         urlInput.focus();
-      });
-
-      homeLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        urlInput.value = '';
-        clearBtn.style.display = 'none';
-        pasteBtn.style.display = 'inline-flex';
-        resetPlayer();
       });
 
       pasteBtn.addEventListener('click', async () => {
