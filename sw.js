@@ -1,10 +1,11 @@
-const CACHE_NAME = 'yt-offline-v2';
+const CACHE_NAME = 'yt-offline-v3';
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './sleeping.png',
-  './favicon.png'
+  './favicon.png',
+  './incognito.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -51,7 +52,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. Static Assets (images, icons): Cache first, fallback to network and update cache
+  // 2. Static Assets (images, icons, svgs): Cache first, fallback to network
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
